@@ -1,5 +1,5 @@
 {
-	"name": "ride/web-search",
+	"name": "ride/web-cms-search",
 	"description": "Generic search library for Ride.",
 	"license": "MIT",
 	"version": "0.3.2",
