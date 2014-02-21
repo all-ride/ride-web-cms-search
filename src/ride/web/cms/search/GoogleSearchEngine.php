@@ -3,8 +3,8 @@
 namespace ride\web\cms\search;
 
 use ride\web\cms\search\SearchEngine;
-use pallo\library\template\TemplateFacade;
-use pallo\web\mvc\view\TemplateView;
+use ride\library\template\TemplateFacade;
+use ride\web\mvc\view\TemplateView;
 
 class GoogleSearchEngine implements SearchEngine {
 

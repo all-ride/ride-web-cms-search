@@ -2,9 +2,9 @@
 
 namespace ride\web\cms\controller\widget;
 
-use pallo\library\template\TemplateFacade;
-use pallo\web\cms\controller\widget\AbstractWidget;
-use pallo\web\cms\content\mapper\io\DependencyContentMapperIO;
+use ride\library\template\TemplateFacade;
+use ride\web\cms\controller\widget\AbstractWidget;
+use ride\web\cms\content\mapper\io\DependencyContentMapperIO;
 
 class SearchResultWidget extends AbstractWidget {
 

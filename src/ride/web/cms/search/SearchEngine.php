@@ -2,10 +2,10 @@
 
 namespace ride\web\cms\search;
 
-use \pallo\library\template\TemplateFacade;
+use \ride\library\template\TemplateFacade;
 
 interface SearchEngine {
 
-	public function getView(TemplateFacade $templatefacade, $query, $numItems, $types = null);
+	public function getView(TemplateFacade $templateface, $query, $numItems, $types = null);
 
 }
