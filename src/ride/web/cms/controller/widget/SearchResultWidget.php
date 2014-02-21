@@ -29,7 +29,6 @@ class SearchResultWidget extends AbstractWidget {
 		if (!$engine) {
 			return;
 		}
-
 		$engine = $this->dependencyInjector->get('ride\\web\\cms\\search\\SearchEngine', $engine);
 		$view = $engine->getView($templateFacade, null, null);
 
