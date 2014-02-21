@@ -15,10 +15,10 @@ class GoogleSearchEngine implements SearchEngine {
     }
 
 	public function getView(TemplateFacade $templateFacade, $query, $numItems, $types = null)	{
-		$template = $templateFacade->createTemplate("search.results");
+		$template = $templateFacade->createTemplate("search.results.google");
+        $template->set('client_id', $this->getClientId());
         $view = new TemplateView($template);
         $view->setTemplateFacade($templateFacade);
-
         return $view;
 	}
 

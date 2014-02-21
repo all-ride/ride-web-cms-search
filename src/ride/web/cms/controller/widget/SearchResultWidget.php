@@ -29,7 +29,6 @@ class SearchResultWidget extends AbstractWidget {
 		if (!$engine) {
 			return;
 		}
-
 		$engine = $this->dependencyInjector->get('ride\\web\\cms\\search\\SearchEngine', $engine);
 		$view = $engine->getView($templateFacade, null, null);
 
@@ -37,6 +36,12 @@ class SearchResultWidget extends AbstractWidget {
 
         return $view;
 	}
+
+    public function getPropertiesPreview() {
+        $translator = $this->getTranslator();
+
+        return $translator->translate('preview.search.results');
+    }
 
     /**
      * Gets the callback for the properties action

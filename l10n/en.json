@@ -1,0 +1,11 @@
+{
+	"widget.search.form": "Searchform widget",
+	"widget.search.result": "Searchresult widget",
+	"label.search_result_node": "Result page",
+	"label.search_form_input_label": "Input field label text",
+	"label.search_form_input_placeholder": "Input field placeholder text",
+	"label.search_form_submit_text": "Submit button text",
+	"search.engine.search.engine.google": "Google custom search",
+	"preview.search.form": "Search form widget",
+	"preview.search.results": "Search result widget"
+}

@@ -1,0 +1,11 @@
+{
+	"widget.search.form": "Zoekformulier widget",
+	"widget.search.result": "Zoekresultaten widget",
+	"label.search_result_node": "Resultaten pagina",
+	"label.search_form_input_label": "Zoekveld label",
+	"label.search_form_input_placeholder": "Zoekveld placeholder",
+	"label.search_form_submit_text": "Verzendknop tekst",
+	"search.engine.search.engine.google": "Google zoeken",
+	"preview.search.form": "Toont een zoekformulier",
+	"preview.search.results": "Toont de resultaten van een zoekopdracht"
+}

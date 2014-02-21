@@ -20,7 +20,12 @@ class SearchWidget extends AbstractWidget {
 	const ICON = 'img/cms/widget/text.png';
 
 	public function indexAction() {
-
+        $this->setTemplateView('search.form', array(
+            'action' => strtolower($this->properties->getWidgetProperty('result.node')),
+            'label' => $this->properties->getWidgetProperty('input.label'),
+            'placeholder' => $this->properties->getWidgetProperty('input.placeholder'),
+            'submit' => $this->properties->getWidgetProperty('submit.text'),
+        ));
 	}
 
 	public function getPropertiesPreview() {
@@ -46,12 +51,16 @@ class SearchWidget extends AbstractWidget {
 
 		$data = array(
 			'result_node' => $this->properties->getWidgetProperty('result.node'),
+            'input_label' => $this->properties->getWidgetProperty('input.label'),
+            'input_placeholder' => $this->properties->getWidgetProperty('input.placeholder'),
+            'submit_text' => $this->properties->getWidgetProperty('submit.text'),
 		);
 
 		$form = $this->createFormBuilder($data);
 
 		$options = array();
         $nodes = $nodeModel->getNodesForWidget('search.result');
+
 		foreach ($nodes as $node) {
 			$route = $node->getRoute($this->locale);
 			$name = $node->getName($this->locale) . ' (' . $route . ')';
@@ -59,9 +68,21 @@ class SearchWidget extends AbstractWidget {
 		}
 
 		$form->addRow('result_node', 'select', array(
-			'label' => $translator->translate('label.search_result_node'),
-			'options' => $options,
-		));
+            'label' => $translator->translate('label.search_result_node'),
+            'options' => $options,
+        ));
+
+        $form->addRow('input_label', 'string', array(
+            'label' => $translator->translate('label.search_form_input_label'),
+        ));
+
+        $form->addRow('input_placeholder', 'string', array(
+            'label' => $translator->translate('label.search_form_input_placeholder'),
+        ));
+
+        $form->addRow('submit_text', 'string', array(
+            'label' => $translator->translate('label.search_form_submit_text'),
+        ));
 
 		$form->setRequest($this->request);
 
@@ -74,6 +95,15 @@ class SearchWidget extends AbstractWidget {
 				if (!empty($data['result_node'])) {
 					$this->properties->setWidgetProperty('result.node', $data['result_node']);
 				}
+                if (!empty($data['input_label'])) {
+                    $this->properties->setWidgetProperty('input.label', $data['input_label']);
+                }
+                if (!empty($data['input_placeholder'])) {
+                    $this->properties->setWidgetProperty('input.placeholder', $data['input_placeholder']);
+                }
+                if (!empty($data['submit_text'])) {
+                    $this->properties->setWidgetProperty('submit.text', $data['submit_text']);
+                }
 				return TRUE;
 			}
 			catch (Exception $e) {
