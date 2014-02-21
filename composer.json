@@ -1,0 +1,17 @@
+{
+	"name": "ride/web-search",
+	"description": "Generic search library for Ride.",
+	"license": "MIT",
+	"version": "0.3.2",
+	"authors": [
+		{
+			"name": "Ward brems",
+			"email": "ward@statik.be"
+		}
+	],
+	"autoload": {
+		"psr-0": {
+			"ride\\web\\cms": ["src/"]
+		}
+	}
+}
