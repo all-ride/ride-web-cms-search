@@ -37,6 +37,12 @@ class SearchResultWidget extends AbstractWidget {
         return $view;
 	}
 
+    public function getPropertiesPreview() {
+        $translator = $this->getTranslator();
+
+        return $translator->translate('preview.search.results');
+    }
+
     /**
      * Gets the callback for the properties action
      * @return null|callback Null if the widget does not implement a properties
