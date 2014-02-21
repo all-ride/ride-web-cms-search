@@ -1,0 +1,33 @@
+{
+	"dependencies": [
+		{
+			"interfaces": "pallo\\library\\cms\\widget\\Widget",
+			"class": "ride\\web\\cms\\controller\\widget\\SearchWidget",
+			"id": "search.form"
+		},
+		{
+			"interfaces": "pallo\\library\\cms\\widget\\Widget",
+			"class": "ride\\web\\cms\\controller\\widget\\SearchResultWidget",
+			"id": "search.result"
+		},
+		{
+			"interfaces": "ride\\web\\cms\\search\\SearchEngine",
+			"class": "ride\\web\\cms\\search\\GoogleSearchEngine",
+			"id": "search.engine.google",
+			"calls": [
+				{
+					"method": "__construct",
+					"arguments": [
+						{
+							"name": "clientId",
+							"type": "parameter",
+							"properties": {
+								"key": "search.engine.google.client.id"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
