@@ -3,7 +3,6 @@
 namespace ride\web\cms\controller\widget;
 
 use ride\library\cms\node\NodeModel;
-use ride\web\cms\controller\widget\AbstractWidget;
 
 class SearchWidget extends AbstractWidget {
 

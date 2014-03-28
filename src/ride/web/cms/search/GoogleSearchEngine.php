@@ -2,7 +2,6 @@
 
 namespace ride\web\cms\search;
 
-use ride\web\cms\search\SearchEngine;
 use ride\library\template\TemplateFacade;
 use ride\web\mvc\view\TemplateView;
 
