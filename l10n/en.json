@@ -1,11 +1,9 @@
 {
-	"widget.search.form": "Searchform widget",
-	"widget.search.result": "Searchresult widget",
-	"label.search_result_node": "Result page",
-	"label.search_form_input_label": "Input field label text",
-	"label.search_form_input_placeholder": "Input field placeholder text",
-	"label.search_form_submit_text": "Submit button text",
-	"search.engine.search.engine.google": "Google custom search",
-	"preview.search.form": "Search form widget",
-	"preview.search.results": "Search result widget"
+    "label.engine.search": "Search Engine",
+    "label.id.client.google.search": "Client ID",
+    "label.node.search.result": "Result Page",
+    "label.node.search.result.description": "The node where this search form will submit to. Only nodes which contain a search result widget will popup in this field.",
+    "search.engine.google": "Google",
+	"widget.search.form": "Search Form",
+	"widget.search.result": "Search Result"
 }
