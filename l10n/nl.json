@@ -1,11 +1,9 @@
 {
-	"widget.search.form": "Zoekformulier widget",
-	"widget.search.result": "Zoekresultaten widget",
-	"label.search_result_node": "Resultaten pagina",
-	"label.search_form_input_label": "Zoekveld label",
-	"label.search_form_input_placeholder": "Zoekveld placeholder",
-	"label.search_form_submit_text": "Verzendknop tekst",
-	"search.engine.search.engine.google": "Google zoeken",
-	"preview.search.form": "Toont een zoekformulier",
-	"preview.search.results": "Toont de resultaten van een zoekopdracht"
+    "label.engine.search": "Zoekrobot",
+    "label.id.client.google.search": "Client ID",
+    "label.node.search.result": "Resultaten",
+    "label.node.search.result.description": "De pagina waar dit zoekformulier naartoe stuurt. Enkel de nodes waar een zoekresultaten widget opstaat worden hier getoont.",
+    "search.engine.google": "Google",
+    "widget.search.form": "Zoekformulier",
+    "widget.search.result": "Zoekresultaten"
 }

@@ -1,12 +1,16 @@
 {
 	"name": "ride/web-cms-search",
-	"description": "Generic search library for Ride.",
+	"description": "Search widgets for the Ride CMS.",
 	"license": "MIT",
 	"version": "0.3.2",
 	"authors": [
 		{
 			"name": "Ward brems",
 			"email": "ward@statik.be"
+		},
+		{
+			"name": "Joris Vandeweerd",
+			"email": "joris@statik.be"
 		}
 	],
 	"autoload": {
