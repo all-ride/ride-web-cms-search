@@ -3,8 +3,10 @@
 namespace ride\web\cms\controller\widget;
 
 use ride\library\template\TemplateFacade;
+
 use ride\web\cms\controller\widget\AbstractWidget;
 use ride\web\cms\content\mapper\io\DependencyContentMapperIO;
+use ride\web\cms\search\SearchEngine;
 
 /**
  * Widget for search results
@@ -68,16 +70,9 @@ class SearchResultWidget extends AbstractWidget {
      */
 	public function propertiesAction() {
 		$translator = $this->getTranslator();
-        $engineOptions = array();
 
+        $engine = $this->properties->getWidgetProperty('engine', $this->request->getBodyParameter('engine'));
         $engines = $this->dependencyInjector->getAll('ride\\web\\cms\\search\\SearchEngine');
-        foreach ($engines as $engineName => $engine) {
-            $engineOptions[$engineName] = $translator->translate('search.engine.' . $engineName);
-        }
-        $engineOptions = array('' => '---') + $engineOptions;
-
-        $engine = $this->properties->getWidgetProperty('engine');
-
         $formOptions = array(
             'translator' => $translator,
         );
@@ -85,6 +80,46 @@ class SearchResultWidget extends AbstractWidget {
             'current' => $engine,
             'engine' => $engine,
         );
+
+        $form = $this->createPropertiesForm($data, $formOptions, $engines, $engine ? $engines[$engine] : null);
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+
+            if ($data['engine'] && $data['engine'] == $data['current']) {
+                try {
+                    $form->validate();
+
+                    $this->properties->setWidgetProperty('engine', $data['engine']);
+
+                    $engines[$data['engine']]->processPropertiesForm($data);
+
+                    return true;
+                } catch (ValidationException $exception) {
+                    $this->setValidationException($exception, $form);
+                }
+            } else {
+                $engine = $data['engine'];
+
+                $form = $this->createPropertiesForm($data, $formOptions, $engines, $engine ? $engines[$engine] : null);
+                $form->getRow('current')->setData($engine);
+            }
+        }
+
+        $view = $this->setTemplateView('cms/widget/search/properties', array(
+            'form' => $form->getView(),
+        ));
+        $view->addJavascript('js/cms/search.js');
+
+        return false;
+	}
+
+    protected function createPropertiesForm(array $data, array $formOptions, array $engines, SearchEngine $engine = null) {
+        $translator = $this->getTranslator();
+
+        $engineOptions = array('' => '---');
+        foreach ($engines as $engineName => $engineInstance) {
+            $engineOptions[$engineName] = $translator->translate('search.engine.' . $engineName);
+        }
 
         $form = $this->createFormBuilder($data);
         $form->setId('form-search-result');
@@ -98,63 +133,12 @@ class SearchResultWidget extends AbstractWidget {
         ));
 
         if ($engine) {
-            $engines[$engine]->setLocale($this->locale);
-            $engines[$engine]->setResultWidgetProperties($this->properties);
-            $engines[$engine]->preparePropertiesForm($form, $formOptions);
+            $engine->setLocale($this->locale);
+            $engine->setResultWidgetProperties($this->properties);
+            $engine->preparePropertiesForm($form, $formOptions);
         }
 
-		$form = $form->build();
-        if ($form->isSubmitted()) {
-            $currentEngine = $form->getRow('current')->getData();
-            $selectedEngine = $form->getRow('engine')->getData();
-            if ($currentEngine == $selectedEngine) {
-                try {
-                    $form->validate();
-
-                    $data = $form->getData();
-
-                    $this->properties->setWidgetProperty('engine', $data['engine']);
-
-                    if ($currentEngine) {
-                        $engines[$currentEngine]->processPropertiesForm($data);
-                    }
-
-                    return true;
-                } catch (ValidationException $exception) {
-                    $this->setValidationException($exception, $form);
-                }
-            } else {
-                $engine = $selectedEngine;
-
-                $data['current'] = $engine;
-                $data['engine'] = $engine;
-
-                $form = $this->createFormBuilder($data);
-                $form->addRow('current', 'hidden');
-                $form->addRow('engine', 'select', array(
-                    'label' => $translator->translate('label.engine.search'),
-                    'options' => $engineOptions,
-                    'validators' => array(
-                        'required' => array(),
-                    ),
-                ));
-
-                if ($engine) {
-                    $engines[$engine]->setLocale($this->locale);
-                    $engines[$engine]->setResultWidgetProperties($this->properties);
-                    $engines[$engine]->preparePropertiesForm($form, $formOptions);
-                }
-
-                $form = $form->build();
-            }
-        }
-
-        $view = $this->setTemplateView('cms/widget/search/properties', array(
-            'form' => $form->getView(),
-        ));
-        $view->addJavascript('js/cms/search.js');
-
-        return false;
-	}
+        return $form->build();
+    }
 
 }
