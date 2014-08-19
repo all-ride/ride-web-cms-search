@@ -2,7 +2,7 @@
 	"name": "ride/web-cms-search",
 	"description": "Search widgets for the Ride CMS.",
 	"license": "MIT",
-	"version": "0.4.1",
+	"version": "0.5.0",
 	"authors": [
 		{
 			"name": "Ward brems",
