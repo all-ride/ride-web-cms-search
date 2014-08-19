@@ -1,8 +1,11 @@
 {
-    "label.engine.search": "Zoekrobot",
+    "label.engine.search": "Zoekmotor",
+    "label.content.mappers": "Inhoudsmappers",
+    "label.content.mappers.search.description": "Selecteer de inhoudsmappers die gebruikt worden door deze zoekmotor",
     "label.id.client.google.search": "Client ID",
     "label.node.search.result": "Resultaten",
     "label.node.search.result.description": "De pagina waar dit zoekformulier naartoe stuurt. Enkel de nodes waar een zoekresultaten widget opstaat worden hier getoont.",
+    "search.engine.content": "Inhoud",
     "search.engine.google": "Google",
     "widget.search.form": "Zoekformulier",
     "widget.search.result": "Zoekresultaten"

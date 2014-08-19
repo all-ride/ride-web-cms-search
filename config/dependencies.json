@@ -12,6 +12,11 @@
 		},
 		{
 			"interfaces": "ride\\web\\cms\\search\\SearchEngine",
+			"class": "ride\\web\\cms\\search\\ContentSearchEngine",
+			"id": "content"
+		},
+		{
+			"interfaces": "ride\\web\\cms\\search\\SearchEngine",
 			"class": "ride\\web\\cms\\search\\GoogleSearchEngine",
 			"id": "google"
 		}

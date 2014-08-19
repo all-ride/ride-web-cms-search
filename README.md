@@ -1,4 +1,4 @@
-ride-web-search
-===============
+ride-web-cms-search
+===================
 
-Search Engine for ride 
+Search abstraction for the Ride CMS.

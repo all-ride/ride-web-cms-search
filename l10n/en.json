@@ -1,8 +1,11 @@
 {
     "label.engine.search": "Search Engine",
     "label.id.client.google.search": "Client ID",
+    "label.content.mappers": "Content Mappers",
+    "label.content.mappers.search.description": "Set the content mappers the search uses",
     "label.node.search.result": "Result Page",
     "label.node.search.result.description": "The node where this search form will submit to. Only nodes which contain a search result widget will popup in this field.",
+    "search.engine.content": "Content",
     "search.engine.google": "Google",
 	"widget.search.form": "Search Form",
 	"widget.search.result": "Search Result"
