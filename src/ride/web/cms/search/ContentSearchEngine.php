@@ -77,16 +77,18 @@ class ContentSearchEngine extends AbstractSearchEngine {
             'types' => array(),
         );
 
-        $mappers = $this->getSearchContentMappers();
-        foreach ($mappers as $contentType => $contentMapper) {
-            if ($type && $contentType != $type) {
-                continue;
+        if ($query) {
+            $mappers = $this->getSearchContentMappers();
+            foreach ($mappers as $contentType => $contentMapper) {
+                if ($type && $contentType != $type) {
+                    continue;
+                }
+
+                $contentResult = $contentMapper->searchContent($site, $this->locale, $query, explode(' ', $query), $page, $entriesPerPage);
+
+                $result['total'] += $contentResult->getTotal();
+                $result['types'][$contentType] = $contentResult;
             }
-
-            $contentResult = $contentMapper->searchContent($site, $this->locale, $query, explode(' ', $query), $page, $entriesPerPage);
-
-            $result['total'] += $contentResult->getTotal();
-            $result['types'][$contentType] = $contentResult;
         }
 
         // create and return the view
