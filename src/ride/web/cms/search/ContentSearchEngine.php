@@ -16,6 +16,36 @@ use ride\web\mvc\view\TemplateView;
 class ContentSearchEngine extends AbstractSearchEngine {
 
     /**
+     * Default number of entries per type on the search overview page
+     * @var integer
+     */
+    const DEFAULT_ENTRIES_OVERVIEW = 3;
+
+    /**
+     * Default number of entries on the type detail page
+     * @var integer
+     */
+    const DEFAULT_ENTRIES_TYPE = 20;
+
+    /**
+     * Name of the mappers property
+     * @var string
+     */
+    const PROPERTY_MAPPERS = 'mappers';
+
+    /**
+     * Name of the entries overview property
+     * @var string
+     */
+    const PROPERTY_ENTRIES_OVERVIEW = 'entries.overview';
+
+    /**
+     * Name of the entries type property
+     * @var string
+     */
+    const PROPERTY_ENTRIES_TYPE = 'entries.page';
+
+    /**
      * Instance of the content facade
      * @var \ride\library\cms\content\ContentFacade
      */
@@ -65,9 +95,9 @@ class ContentSearchEngine extends AbstractSearchEngine {
         $type = $request->getQueryParameter('type');
         $page = $request->getQueryParameter('page', 1);
         if ($type) {
-            $entriesPerPage = 20;
+            $entriesPerPage = $this->resultWidgetProperties->getWidgetProperty(self::PROPERTY_ENTRIES_TYPE, self::DEFAULT_ENTRIES_TYPE);
         } else {
-            $entriesPerPage = 3;
+            $entriesPerPage = $this->resultWidgetProperties->getWidgetProperty(self::PROPERTY_ENTRIES_OVERVIEW, self::DEFAULT_ENTRIES_OVERVIEW);
         }
 
         // perform the search
@@ -84,7 +114,7 @@ class ContentSearchEngine extends AbstractSearchEngine {
                     continue;
                 }
 
-                $contentResult = $contentMapper->searchContent($site, $this->locale, $query, explode(' ', $query), $page, $entriesPerPage);
+                $contentResult = $contentMapper->searchContent($site, $this->locale, $query, explode(' ', $query), (integer) $page, (integer) $entriesPerPage);
 
                 $result['total'] += $contentResult->getTotal();
                 $result['types'][$contentType] = $contentResult;
@@ -112,12 +142,16 @@ class ContentSearchEngine extends AbstractSearchEngine {
             $mappers[$type] = $type;
         }
 
-        $defaultMappers = $this->resultWidgetProperties->getWidgetProperty('mappers');
+        $defaultMappers = $this->resultWidgetProperties->getWidgetProperty(self::PROPERTY_MAPPERS);
         if ($defaultMappers) {
             $defaultMappers = array_flip(explode(',', $defaultMappers));
         } else {
             $defaultMappers = array();
         }
+
+        $entriesOverview = $this->resultWidgetProperties->getWidgetProperty(self::PROPERTY_ENTRIES_OVERVIEW, self::DEFAULT_ENTRIES_OVERVIEW);
+        $entriesType = $this->resultWidgetProperties->getWidgetProperty(self::PROPERTY_ENTRIES_TYPE, self::DEFAULT_ENTRIES_TYPE);
+        $entriesOptions = array_combine(range(1,50), range(1,50));
 
         $builder->addRow('mappers', 'select', array(
             'label' => $options['translator']->translate('label.content.mappers'),
@@ -125,6 +159,18 @@ class ContentSearchEngine extends AbstractSearchEngine {
             'default' => $defaultMappers,
             'multiple' => true,
             'options' => $mappers,
+        ));
+        $builder->addRow('entriesOverview', 'select', array(
+            'label' => $options['translator']->translate('label.number.entries.overview'),
+            'description' => $options['translator']->translate('label.number.entries.overview.description'),
+            'default' => $entriesOverview,
+            'options' => $entriesOptions,
+        ));
+        $builder->addRow('entriesType', 'select', array(
+            'label' => $options['translator']->translate('label.number.entries.type'),
+            'description' => $options['translator']->translate('label.number.entries.type.description'),
+            'default' => $entriesType,
+            'options' => $entriesOptions,
         ));
     }
 
@@ -134,7 +180,9 @@ class ContentSearchEngine extends AbstractSearchEngine {
      * @return null
      */
     public function processPropertiesForm(array $data) {
-        $this->resultWidgetProperties->setWidgetProperty('mappers', implode(',', $data['mappers']));
+        $this->resultWidgetProperties->setWidgetProperty(self::PROPERTY_MAPPERS, implode(',', $data['mappers']));
+        $this->resultWidgetProperties->setWidgetProperty(self::PROPERTY_ENTRIES_OVERVIEW, $data['entriesOverview']);
+        $this->resultWidgetProperties->setWidgetProperty(self::PROPERTY_ENTRIES_TYPE, $data['entriesType']);
     }
 
     /**
@@ -144,7 +192,7 @@ class ContentSearchEngine extends AbstractSearchEngine {
     protected function getSearchContentMappers() {
         $mappers = $this->getAvailableContentMappers();
 
-        $searchMappers = $this->resultWidgetProperties->getWidgetProperty('mappers');
+        $searchMappers = $this->resultWidgetProperties->getWidgetProperty(self::PROPERTY_MAPPERS);
         if (!$searchMappers) {
             return $mappers;
         }
