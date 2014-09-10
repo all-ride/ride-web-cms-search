@@ -1,21 +1,21 @@
 {
-	"name": "ride/web-cms-search",
-	"description": "Search widgets for the Ride CMS.",
-	"license": "MIT",
-	"version": "0.5.1",
-	"authors": [
-		{
-			"name": "Ward brems",
-			"email": "ward@statik.be"
-		},
-		{
-			"name": "Joris Vandeweerd",
-			"email": "joris@statik.be"
-		}
-	],
-	"autoload": {
-		"psr-0": {
-			"ride\\web\\cms": ["src/"]
-		}
-	}
+    "name": "ride/web-cms-search",
+    "description": "Search widgets for the Ride CMS.",
+    "license": "MIT",
+    "version": "0.5.1",
+    "authors": [
+        {
+            "name": "Ward brems",
+            "email": "ward@statik.be"
+        },
+        {
+            "name": "Joris Vandeweerd",
+            "email": "joris@statik.be"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "ride\\web\\cms": ["src/"]
+        }
+    }
 }
