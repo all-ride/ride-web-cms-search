@@ -65,7 +65,8 @@ class SearchFormWidget extends AbstractWidget implements StyleWidget {
             $translator = $this->getTranslator();
 
             $nodeModel = $this->dependencyInjector->get('ride\\library\\cms\\node\\NodeModel');
-            $node = $nodeModel->getNode($nodeId);
+            $node = $this->properties->getNode();
+            $node = $nodeModel->getNode($node->getRootNodeId(), $node->getRevision(), $nodeId);
             if ($node) {
                 $preview = '<strong>' . $translator->translate('label.node.search.result') . '</strong>: ' . $node->getName($this->locale) . '<br />';
             }
@@ -88,7 +89,7 @@ class SearchFormWidget extends AbstractWidget implements StyleWidget {
 		);
 
         $options = array('' => '---');
-        $nodes = $nodeModel->getNodesForWidget('search.result');
+        $nodes = $nodeModel->getNodesForWidget('search.result', $this->properties->getNode()->getRootNodeId());
         foreach ($nodes as $node) {
             $options[$node->getId() . '-' . $node->getWidgetId()] = $node->getName($this->locale);
         }
