@@ -13,6 +13,9 @@
             "email": "joris@statik.be"
         }
     ],
+    "require": {
+        "ride/web-cms": ">=0.15.0",
+    },
     "autoload": {
         "psr-0": {
             "ride\\web\\cms": ["src/"]
