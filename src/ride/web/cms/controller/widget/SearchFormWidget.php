@@ -16,17 +16,17 @@ class SearchFormWidget extends AbstractWidget implements StyleWidget {
      */
     const NAME = 'search.form';
 
-	/**
-	 * Path to the icon of this widget
-	 * @var string
-	 */
+    /**
+     * Path to the icon of this widget
+     * @var string
+     */
     const ICON = 'img/cms/widget/search.form.png';
 
     /**
      * Action to show the search form
      * @return null
      */
-	public function indexAction(NodeModel $nodeModel, TemplateFacade $templateFacade) {
+    public function indexAction(NodeModel $nodeModel, TemplateFacade $templateFacade) {
         $nodeId = $this->properties->getWidgetProperty('result.node');
         $widgetId = $this->properties->getWidgetProperty('result.widget');
 
@@ -52,7 +52,7 @@ class SearchFormWidget extends AbstractWidget implements StyleWidget {
         if ($view) {
             $this->response->setView($view);
         }
-	}
+    }
 
     /**
      * Get a preview of the properties of this widget
@@ -76,18 +76,18 @@ class SearchFormWidget extends AbstractWidget implements StyleWidget {
         return $preview;
     }
 
-	/*
+    /*
      * Action to manage the properties of thie widget
      * @param \ride\library\cms\node\NodeModel $nodeModel Instance of the node
      * model
      * @return null
-	 */
-	public function propertiesAction(NodeModel $nodeModel) {
-		$translator = $this->getTranslator();
+     */
+    public function propertiesAction(NodeModel $nodeModel) {
+        $translator = $this->getTranslator();
 
-		$data = array(
-			'result' => $this->properties->getWidgetProperty('result.node') . '-' . $this->properties->getWidgetProperty('result.widget'),
-		);
+        $data = array(
+            'result' => $this->properties->getWidgetProperty('result.node') . '-' . $this->properties->getWidgetProperty('result.widget'),
+        );
 
         $options = array('' => '---');
         $nodes = $nodeModel->getNodesForWidget('search.result', $this->properties->getNode()->getRootNodeId());
@@ -95,8 +95,8 @@ class SearchFormWidget extends AbstractWidget implements StyleWidget {
             $options[$node->getId() . '-' . $node->getWidgetId()] = $node->getName($this->locale);
         }
 
-		$form = $this->createFormBuilder($data);
-		$form->addRow('result', 'select', array(
+        $form = $this->createFormBuilder($data);
+        $form->addRow('result', 'select', array(
             'label' => $translator->translate('label.node.search.result'),
             'description' => $translator->translate('label.node.search.result.description'),
             'options' => $options,
@@ -105,30 +105,30 @@ class SearchFormWidget extends AbstractWidget implements StyleWidget {
             ),
         ));
 
-		$form = $form->build();
-		if ($form->isSubmitted()) {
-			try {
+        $form = $form->build();
+        if ($form->isSubmitted()) {
+            try {
                 $form->validate();
 
-				$data =  $form->getData();
+                $data =  $form->getData();
 
                 list($nodeId, $widgetId) = explode('-', $data['result']);
 
                 $this->properties->setWidgetProperty('result.node', $nodeId);
-				$this->properties->setWidgetProperty('result.widget', $widgetId);
+                $this->properties->setWidgetProperty('result.widget', $widgetId);
 
-				return true;
-			} catch (ValidationException $exception) {
+                return true;
+            } catch (ValidationException $exception) {
                 $this->setValidationException($exception, $form);
-			}
-		}
+            }
+        }
 
         $this->setTemplateView('cms/widget/search/properties', array(
             'form' => $form->getView(),
         ));
 
-		return false;
-	}
+        return false;
+    }
 
     /**
      * Gets the options for the styles
