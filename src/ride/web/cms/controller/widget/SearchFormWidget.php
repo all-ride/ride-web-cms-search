@@ -34,7 +34,8 @@ class SearchFormWidget extends AbstractWidget implements StyleWidget {
             return;
         }
 
-        $resultNode = $nodeModel->getNode($nodeId);
+        $selfNode = $this->properties->getNode();
+        $resultNode = $nodeModel->getNode($selfNode->getRootNodeId(), $selfNode->getRevision(), $nodeId);
         $resultWidgetProperties = $resultNode->getWidgetProperties($widgetId);
 
         $engine = $resultWidgetProperties->getWidgetProperty('engine');
