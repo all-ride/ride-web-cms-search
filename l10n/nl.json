@@ -1,7 +1,7 @@
 {
-    "label.engine.search": "Zoekmotor",
     "label.content.mappers": "Inhoudsmappers",
     "label.content.mappers.search.description": "Selecteer de inhoudsmappers die gebruikt worden door deze zoekmotor",
+    "label.engine.search": "Zoekmotor",
     "label.id.client.google.search": "Client ID",
     "label.node.search.result": "Resultaten",
     "label.node.search.result.description": "De pagina waar dit zoekformulier naartoe stuurt. Enkel de nodes waar een zoekresultaten widget opstaat worden hier getoont.",
@@ -9,17 +9,17 @@
     "label.number.entries.overview.description": "Aantal entries per type op de overzichtspagina",
     "label.number.entries.type": "Entries Type",
     "label.number.entries.type.description": "Aantal entries per pagina van een type detail pagina",
-    "search.engine.content": "Inhoud",
-    "search.engine.google": "Google",
-    "widget.search.form": "Zoekformulier",
-    "widget.search.result": "Zoekresultaten",
     "permission.cms.widget.search.form.cache": "Zoekformulier widget cache aanpassen",
-    "permission.cms.widget.search.form.manage": "Zoekformulier widget kunnen toevoegen",
+    "permission.cms.widget.search.form.manage": "Zoekformulier widget kunnen toevoegen/verwijderen",
     "permission.cms.widget.search.form.properties": "Zoekformulier widget eigenschappen kunnen aanpassen",
     "permission.cms.widget.search.form.style": "Extra style classes toevoegen aan zoekformulier widget",
     "permission.cms.widget.search.form.visibility": "Zoekformulier zichtbaarheid aanpassen",
     "permission.cms.widget.search.result.cache": "Zoekresultaten widget cache instellen",
-    "permission.cms.widget.search.result.manage": "Zoekresultaten widget kunnen toevoegen",
+    "permission.cms.widget.search.result.manage": "Zoekresultaten widget kunnen toevoegen/verwijderen",
     "permission.cms.widget.search.result.properties": "Zoekresultaten widget eigenschappen aanpassen",
-    "permission.cms.widget.search.result.visibility": "Zoekresultaten widget zichtbaarheid aanpassen"
+    "permission.cms.widget.search.result.visibility": "Zoekresultaten widget zichtbaarheid aanpassen",
+    "search.engine.content": "Inhoud",
+    "search.engine.google": "Google",
+    "widget.search.form": "Zoekformulier",
+    "widget.search.result": "Zoekresultaten"
 }
