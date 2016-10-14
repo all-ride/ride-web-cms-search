@@ -2,7 +2,6 @@
     "name": "ride/web-cms-search",
     "description": "Search widgets for the Ride CMS.",
     "license": "MIT",
-    "version": "0.7.0",
     "authors": [
         {
             "name": "Ward brems",
@@ -14,7 +13,16 @@
         }
     ],
     "require": {
-        "ride/web-cms": ">=0.16.0"
+        "ride/app": "^1.0.0",
+        "ride/lib-cms": "^1.0.0",
+        "ride/lib-form": "^1.0.0",
+        "ride/lib-http": "^1.0.0",
+        "ride/lib-template": "^1.0.0",
+        "ride/lib-widget": "^1.0.0",
+        "ride/web": "^1.0.0",
+        "ride/web-base": "^1.0.0",
+        "ride/web-cms": "^1.0.0",
+        "ride/web-template": "^1.0.0"
     },
     "autoload": {
         "psr-0": {
