@@ -83,11 +83,12 @@ class ContentSearchEngine extends AbstractSearchEngine {
 
         // redirect post requests to get requests
         if ($request->isPost()) {
-            $query = $request->getBodyParameter('query');
+            $bodyParameters = $request->getBodyParameters();
+            if (array_key_exists('query', $bodyParameters)) {
+                $response->setRedirect($request->getUrl() . '?query=' . urlencode($bodyParameters['query']));
 
-            $response->setRedirect($request->getUrl() . '?query=' . urlencode($query));
-
-            return;
+                return;
+            }
         }
 
         // get the request arguments
