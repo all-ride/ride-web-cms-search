@@ -29,21 +29,32 @@ class SearchResultWidget extends AbstractWidget {
 	 * Widget properties form
 	 */
 	public function indexAction(TemplateFacade $templateFacade) {
-        $engine = $this->properties->getWidgetProperty('engine');
-        if (!$engine) {
+        $engineId = $this->properties->getWidgetProperty('engine');
+        if (!$engineId) {
             return;
         }
 
-        $engine = $this->dependencyInjector->get('ride\\web\\cms\\search\\SearchEngine', $engine);
+        $engine = $this->dependencyInjector->get('ride\\web\\cms\\search\\SearchEngine', $engineId);
         $engine->setLocale($this->locale);
         $engine->setTemplateFacade($templateFacade);
         $engine->setResultWidgetProperties($this->properties);
 
         $view = $engine->getResultView($this->request, $this->response);
+
+        $type = $this->request->getQueryParameter('type');
+        if ($engineId === 'content' && $type) {
+            $pagination = $view->getTemplate()->get('pagination');
+
+            $breadcrumbUrl = str_replace('&page=%page%', '', $pagination->getHref());
+            $breadcrumbLabel = $this->getTranslator()->translate('label.search.type.' . $type);
+
+            $this->addBreadcrumb($breadcrumbUrl, $breadcrumbLabel);
+        }
+
         if ($view) {
             $this->response->setView($view);
         }
-	}
+    }
 
     /**
      * Get a preview of the properties of this widget
