@@ -5,10 +5,13 @@ namespace ride\web\cms\search;
 use ride\library\cms\content\mapper\SearchableContentMapper;
 use ride\library\cms\content\ContentFacade;
 use ride\library\form\FormBuilder;
+use ride\library\html\Pagination;
 use ride\library\http\Request;
 use ride\library\http\Response;
 use ride\library\template\TemplateFacade;
+
 use ride\web\mvc\view\TemplateView;
+use ride\web\WebApplication;
 
 /**
  * Content search engine
@@ -55,7 +58,8 @@ class ContentSearchEngine extends AbstractSearchEngine {
      * Constructs a new search engine
      * @param \ride\library\cms\content\ContentFacade $contentFacade
      */
-    public function __construct(ContentFacade $contentFacade) {
+    public function __construct(WebApplication $web, ContentFacade $contentFacade) {
+        $this->web = $web;
         $this->contentFacade = $contentFacade;
     }
 
@@ -65,8 +69,13 @@ class ContentSearchEngine extends AbstractSearchEngine {
      * @return \ride\library\mvc\view\View
      */
     public function getFormView(Request $request) {
+        $resultNode = $this->resultWidgetProperties->getNode();
+        $rootNode = $resultNode->getRootNode();
+
+        $action = $this->web->getUrl('cms.front.' . $rootNode->getId() . '.' . $resultNode->getId() . '.' . $this->locale);
+
         $template = $this->templateFacade->createTemplate('cms/widget/search/form.content');
-        $template->set('action', $this->resultWidgetProperties->getNode()->getUrl($this->locale, $request->getBaseScript()));
+        $template->set('action', $action);
         $template->set('query', $request->getQueryParameter('query'));
 
         return new TemplateView($template);
@@ -85,7 +94,7 @@ class ContentSearchEngine extends AbstractSearchEngine {
         if ($request->isPost()) {
             $bodyParameters = $request->getBodyParameters();
             if (array_key_exists('query', $bodyParameters)) {
-                $response->setRedirect($request->getUrl() . '?query=' . urlencode($bodyParameters['query']));
+                $response->setRedirect($request->getUrl(true) . '?query=' . urlencode($bodyParameters['query']));
 
                 return;
             }
@@ -122,11 +131,27 @@ class ContentSearchEngine extends AbstractSearchEngine {
             }
         }
 
+        if ($type) {
+            $numRows = $result['types'][$type]->getTotal();
+            $pages = ceil($numRows / $entriesPerPage);
+
+            $urlMore = null;
+            $urlPagination = $request->getUrl(true) . '?query=' . urlencode($query) . '&type=' . urlencode($type);
+
+            $pagination = new Pagination($pages, $page);
+            $pagination->setHref($urlPagination . '&page=%page%');
+        } else {
+            $urlMore = $request->getUrl();
+
+            $pagination = null;
+        }
+
         // create and return the view
         $template = $this->templateFacade->createTemplate("cms/widget/search/result.content");
         $template->set('result', $result);
         $template->set('query', $query);
-        $template->set('urlMore', $request->getUrl());
+        $template->set('urlMore', $urlMore);
+        $template->set('pagination', $pagination);
 
         return new TemplateView($template);
     }
@@ -200,7 +225,11 @@ class ContentSearchEngine extends AbstractSearchEngine {
 
         $searchMappers = array_flip(explode(',', $searchMappers));
         foreach ($searchMappers as $type => $null) {
-            $searchMappers[$type] = $mappers[$type];
+            if (isset($mappers[$type])) {
+                $searchMappers[$type] = $mappers[$type];
+            } else {
+                unset($searchMappers[$type]);
+            }
         }
 
         return $searchMappers;
