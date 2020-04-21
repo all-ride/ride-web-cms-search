@@ -1,3 +1,7 @@
+## [1.0.3] - 2020-04-21
+### Updated
+- localized searchable mappers selection
+
 ## [1.0.2] - 2020-04-17
 ### Updated
 - correct form action URL when using debug mode

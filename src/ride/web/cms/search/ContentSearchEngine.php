@@ -218,7 +218,7 @@ class ContentSearchEngine extends AbstractSearchEngine {
     protected function getSearchContentMappers() {
         $mappers = $this->getAvailableContentMappers();
 
-        $searchMappers = $this->resultWidgetProperties->getWidgetProperty(self::PROPERTY_MAPPERS);
+        $searchMappers = $this->resultWidgetProperties->getLocalizedWidgetProperty($this->locale, self::PROPERTY_MAPPERS);
         if (!$searchMappers) {
             return $mappers;
         }
